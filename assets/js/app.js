@@ -22,3 +22,23 @@ const crearBaraja = () => {
 }
 
 crearBaraja();
+
+const pedirCarta = () => {
+    if(baraja.length === 0){
+        console.log("no hay mas cartas");
+    }
+    
+    const carta = baraja.pop();
+    
+    console.log(baraja);
+    console.log(carta)
+    return carta;
+}
+
+const valorCarta = (carta) => {
+    const valor = carta.substring(0, carta.length - 1);
+    return ((isNaN(valor)) ? (valor === 'A') ? 11 : 10 : valor * 1);
+}
+
+const valor = valorCarta('kd');
+console.log(valor);
