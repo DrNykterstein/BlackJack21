@@ -1,6 +1,16 @@
 let baraja = [];
 const tipos = ['C','D','H','S'];
 const barajasEspeciales = ['A','J','Q','K'];
+let puntosJugador = 0;
+let puntosComputadora = 0;
+
+//botones
+const btnPedir = document.querySelector('#btnPedir');
+const mostrarPuntosHTML = document.querySelectorAll('small');
+
+//Jugador
+const jugadorCartas = document.querySelector('#jugador-cartas');
+
 
 const crearBaraja = () => {
     for(let i = 2; i <= 10; i++){
@@ -8,16 +18,12 @@ const crearBaraja = () => {
             baraja.push(i+tipo);
         }
     }
-
     for(let tipo of tipos){
         for(especial of barajasEspeciales){
             baraja.push(especial+tipo);
         }
     }
-    
-    console.log(baraja);
     baraja = _.shuffle(baraja);
-    console.log(baraja);
     return baraja;
 }
 
@@ -29,9 +35,6 @@ const pedirCarta = () => {
     }
     
     const carta = baraja.pop();
-    
-    console.log(baraja);
-    console.log(carta)
     return carta;
 }
 
@@ -40,5 +43,15 @@ const valorCarta = (carta) => {
     return ((isNaN(valor)) ? (valor === 'A') ? 11 : 10 : valor * 1);
 }
 
-const valor = valorCarta('kd');
-console.log(valor);
+//Eventos
+btnPedir.addEventListener('click', () => {
+    const carta = pedirCarta();
+    puntosJugador += valorCarta(carta);
+    mostrarPuntosHTML[0].innerText = puntosJugador;
+    // Muestro la imagen de la carta
+    const imagenCarta = document.createElement('img');
+    imagenCarta.src = `assets/cartas/${carta}.png`;
+    imagenCarta.classList.add('carta');
+    //inserto carta en el html
+    jugadorCartas.appendChild(imagenCarta);
+});
