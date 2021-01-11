@@ -66,3 +66,7 @@ img{
 #computadora-cartas, #jugador-cartas{
     height: 150px;
 }
+/* Clase que se mostrara con js */
+.perdiste{
+    background-color: transparent;
+}

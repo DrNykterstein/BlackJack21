@@ -10,6 +10,7 @@ const mostrarPuntosHTML = document.querySelectorAll('small');
 
 //Jugador
 const jugadorCartas = document.querySelector('#jugador-cartas');
+const jugadorComputadora = document.querySelector('#computadora-cartas');
 
 
 const crearBaraja = () => {
@@ -43,6 +44,24 @@ const valorCarta = (carta) => {
     return ((isNaN(valor)) ? (valor === 'A') ? 11 : 10 : valor * 1);
 }
 
+//Turno de la computadora
+const turnoComputadora = (puntosMinimos) => {
+    do{
+        const carta = pedirCarta();
+        puntosComputadora += valorCarta(carta);
+        mostrarPuntosHTML[1].innerText = puntosComputadora;
+        // Muestro la imagen de la carta
+        const imagenCarta = document.createElement('img');
+        imagenCarta.src = `assets/cartas/${carta}.png`;
+        imagenCarta.classList.add('carta2');
+        //inserto carta en el html
+        jugadorComputadora.append(imagenCarta);
+        if(puntosMinimos > 21){
+            break;
+        }
+    }while((puntosComputadora < puntosMinimos) && (puntosMinimos <= 21 ));
+}
+
 //Eventos
 btnPedir.addEventListener('click', () => {
     const carta = pedirCarta();
@@ -54,4 +73,16 @@ btnPedir.addEventListener('click', () => {
     imagenCarta.classList.add('carta');
     //inserto carta en el html
     jugadorCartas.appendChild(imagenCarta);
+
+    if(puntosJugador > 21){
+        console.warn("Perdiste");
+        btnPedir.disabled = true;
+        btnPedir.classList.add('perdiste');
+        turnoComputadora(puntosJugador);
+    }else if(puntosJugador === 21){
+        console.warn('ganaste');
+        btnPedir.disabled = true;
+        btnPedir.classList.add('perdiste');
+        turnoComputadora(puntosJugador);
+    }
 });
